@@ -13,7 +13,7 @@ from adafruit_matrixportal.matrix import Matrix
 # --- Color palette ---
 palette = displayio.Palette(8)
 palette[0] = 0x000000  # black
-palette[1] = 0xFF0000  # red
+palette[1] = 0xFFF000  # red
 palette[2] = 0x00FF00  # green
 palette[3] = 0x003870  # dark blue
 palette[4] = 0xfcb4c4  # light pink
