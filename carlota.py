@@ -35,13 +35,8 @@ matrix = Matrix(width=64, height=64)
 matrix.display.show(group)
 
  # --- Choosing a Random Cell ---
-
-#limit the number of cells that are generated
-#for x in range(1, 62):
- #   for y in range(1,62):
-  #      bitmap[x,y] = random.randint(0,1)
-
 #duplicate coordinates, run again
+
 def random_population(min=100, max=100):
     for i in range(random.randint(min,max)):
         x = random.randint(1,62)
@@ -50,61 +45,78 @@ def random_population(min=100, max=100):
 
 
 
-# --- Choosing a Random Color for the Cell ---
-#color = random.randint(1,2)
-#bitmap[x, y] = color
-
-
 # --- Random Patterns ---
-# I need hints on how to implement this.
-# generate random coordinates for the top corner
 
-glider_pattern1 = [
-    [0, 1, 0],
-    [0, 0, 1],
-    [1, 1, 1]
-    ]
+def glider(row, column):
+        glider_pattern1 = [
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 1, 1]]
 
-glider_pattern2 = [
-    [1, 0, 0],
-    [0, 1, 1],
-    [1, 1, 0]
-    ]
+        for i in range(len(glider_pattern1)):
+            for j in range(len(glider_pattern1[i])):
+                bitmap[row + i, column + j] = glider_pattern1[i][j]
 
-blinker = [1, 1, 1]
+def blinker(row, column):
+        blinker = [1, 1, 1]
 
-toad = [[1, 1, 1, 0],
+        for i in range(len(blinker)):
+            bitmap[row+i, column] = blinker[i]
+            if blinker[i] == 1:
+                bitmap[row+i, column] = 1
+
+
+def glider2(row, column):
+        glider_pattern2 = [
+        [1, 0, 0],
+        [0, 1, 1],
+        [1, 1, 0]]
+
+        for i in range(len(glider_pattern2)):
+            for j in range(len(glider_pattern2[i])):
+                bitmap[row + i, column + j] = glider_pattern2[i][j]
+
+def toad(row, column):
+        toad = [
+        [1, 1, 1, 0],
         [0, 1, 1, 1]]
 
-static = [
-    [1, 1, 0],
-    [1, 0, 1],
-    [0, 1, 0]
-    ]
+        for i in range(len(toad)):
+            for j in range(len(toad[i])):
+                bitmap[row + i, column + j] = toad[i][j]
+
+def static(row, column):
+        static = [
+        [1, 1, 0],
+        [1, 0, 1],
+        [0, 1, 0]]
+
+        for i in range(len(static)):
+            for j in range(len(static[i])):
+                bitmap[row + i, column + j] = static[i][j]
 
 
-# --- Creating an Array for the surrounding cells ---
+#random_population(90,200)
 
-#def array(surrounding_cells, x, y):
-    #array = np.array(surrounding_cells)
+row = random.randint(1,62)
+column = random.randint(1,62)
+blinker(row, column)
 
-    #return array
+row = random.randint(1,62)
+column = random.randint(1,62)
+glider(row, column)
 
-#surrounding_cells = bitmap[[[x-1,y-1],[x-1,y],[x-1,y+1]],
-  #                   [[x,y-1],[x,y],[x,y+1]],
-   #                  [[x+1,y-1],[x+1,y],[x+1,y+1]]]
+row = random.randint(1,62)
+column = random.randint(1,62)
+glider2(row, column)
 
-#first_array = array(surrounding_cells)
+row = random.randint(1,62)
+column = random.randint(1,62)
+toad(row, column)
 
-# --- Determining Surrounding of Cell ---
-
-#def surrounding()
-
-#cells_alive = np.sum(surrounding_cells[x-1:x+1, y-1:y+1] - surrounding_cells[x,y])
-#if surrounding_cells[x,y] == 1 and cells_alive < 2 or cells_alive > 3:
-    #cell turns off
-
-random_population(90,200)
+row = random.randint(1,62)
+column = random.randint(1,62)
+static(row, column)
 
 while True:
     time.sleep(1)
