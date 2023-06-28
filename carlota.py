@@ -37,13 +37,8 @@ matrix.display.show(group)
  # --- Choosing a Random Cell ---
 #duplicate coordinates, run again
 
-def random_population(min=100, max=100):
-    for i in range(random.randint(min,max)):
-        x = random.randint(1,62)
-        y = random.randint(1,62)
-        bitmap[x, y] = 1
-
-
+def one_cell(row, column):
+    bitmap[row, column] = 1
 
 # --- Random Patterns ---
 
@@ -95,29 +90,25 @@ def static(row, column):
             for j in range(len(static[i])):
                 bitmap[row + i, column + j] = static[i][j]
 
+def repeat(n, pattern):
+    for i in range(n): 
+        row = random.randint(1,62)
+        column = random.randint(1,62)
+        pattern(row, column)
+        i=+1
 
-#random_population(90,200)
+n=random.randint(1,10)
+repeat(n, blinker)
+repeat(n, one_cell)
+repeat(n, glider)
+repeat(n, glider2)
+repeat(n, toad)
+repeat(n, static)
 
-row = random.randint(1,62)
-column = random.randint(1,62)
-blinker(row, column)
-
-row = random.randint(1,62)
-column = random.randint(1,62)
-glider(row, column)
-
-row = random.randint(1,62)
-column = random.randint(1,62)
-glider2(row, column)
-
-row = random.randint(1,62)
-column = random.randint(1,62)
-toad(row, column)
-
-row = random.randint(1,62)
-column = random.randint(1,62)
-static(row, column)
+#def next_generation():
+     #pass
 
 while True:
+    #next_generation()
     time.sleep(1)
 
