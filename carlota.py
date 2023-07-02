@@ -5,6 +5,7 @@ import maze
 import displayio
 import random
 import terminalio
+import numpy as np
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 from adafruit_matrixportal.network import Network
@@ -35,7 +36,6 @@ matrix = Matrix(width=64, height=64)
 matrix.display.show(group)
 
  # --- Choosing a Random Cell ---
-#duplicate coordinates, run again
 
 def one_cell(row, column):
     bitmap[row, column] = 1
@@ -97,7 +97,7 @@ def repeat(n, pattern):
         pattern(row, column)
         i=+1
 
-n=random.randint(1,10)
+n=random.randint(1,11)
 repeat(n, blinker)
 repeat(n, one_cell)
 repeat(n, glider)
@@ -105,10 +105,39 @@ repeat(n, glider2)
 repeat(n, toad)
 repeat(n, static)
 
-#def next_generation():
-     #pass
+
+i = 0
+j = 0
+
+def cell_dies(i,j):
+    bitmap[i,j] = 0
+     
+def new_cell(i,j):
+      bitmap[i,j] = 1
+
+def cell_lives(i,j):
+      bitmap[i,j] = 1
+
+def next_generation(i,j):
+      bitmap_rows = bitmap.shape[0]
+      bitmap_columns = bitmap.shape[1]
+      count = 0
+      for i in range(bitmap_rows):
+         for j in range(bitmap_columns):
+             surrounding_cells = (bitmap[i-1, j-1], bitmap[i-1,j], bitmap[i-1,j+1], bitmap[i,j-1], 
+                                  bitmap[i,j+1], bitmap[i+1,j-1], bitmap[i+1,j], bitmap[i+1,j+1])
+             count = sum(surrounding_cells)
+
+      if bitmap[i,j] == 1:
+         if count > 3 or count < 2:
+            cell_dies()
+         if count == 2 or count == 3:
+           cell_lives()
+      if bitmap[i,j] == 0:
+         if count == 3:
+           new_cell()                 
 
 while True:
-    #next_generation()
+    next_generation(i,j)
     time.sleep(1)
 
